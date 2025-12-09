@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <title>길 안내 로봇 서비스</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f3f4f6;
+      margin: 0;
+    }
+    .container {
+      max-width: 640px;
+      margin: 40px auto;
+      padding: 0 18px;
+    }
+    header {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #eee;
+      padding: 32px 24px 18px 24px;
+      margin-bottom: 24px;
+      text-align: center;
+    }
+    header h1 {
+      color: #2563eb;
+      margin: 0 0 8px 0;
+      font-size: 2rem;
+      font-weight: bold;
+    }
+    header p {
+      color: #656d77;
+      font-size: 1.06rem;
+      margin: 0;
+    }
+    .menu {
+      display: flex;
+      border-bottom: 1px solid #ddd;
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #eee;
+      overflow: hidden;
+      margin-bottom: 24px;
+    }
+    .menu button {
+      flex: 1;
+      border: none;
+      background: none;
+      padding: 18px 0;
+      cursor: pointer;
+      font-size: 1.08rem;
+      color: #656d77;
+      border-bottom: 2.5px solid transparent;
+      transition: color 0.2s;
+    }
+    .menu button.active {
+      color: #2563eb;
+      background: #e6f2ff;
+      border-bottom: 2.5px solid #2563eb;
+      font-weight: 700;
+    }
+    .content {
+      background: #fff;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px #eee;
+      padding: 28px 26px;
+      min-height: 200px;
+      margin-bottom: 16px;
+    }
+    .space-y-6 > * + * { margin-top: 24px; }
+    .border-t { border-top: 1px solid #ececec; }
+    .pt-6 { padding-top: 24px; }
+    .text-blue-600 { color: #2563eb; }
+    .bg-blue-50 { background: #e6f2ff; }
+    .rounded-lg { border-radius: 10px; }
+    .flex { display: flex; }
+    .gap-3 { gap: 12px; }
+    .mb-4 { margin-bottom: 16px; }
+    .mt-6 { margin-top: 24px; }
+    .mb-2 { margin-bottom: 8px; }
+    .mb-6 { margin-bottom: 24px; }
+    .grid { display: grid; }
+    .grid-cols-2 { grid-template-columns: 1fr 1fr; }
+    .gap-3 { gap: 12px; }
+    .border-l-4 { border-left: 4px solid #2563eb; }
+    .pl-4 { padding-left: 16px; }
+    .bg-yellow-50 { background: #fffde8; }
+    .border-yellow-200 { border: 1px solid #f7e1a2; }
+    .text-yellow-800 { color: #ad8d00; }
+    .space-y-4 > * + * { margin-top: 16px; }
+    .min-w-70 { min-width: 70px; }
+    .footer {
+      text-align: center;
+      color: #808080;
+      font-size: 15px;
+      margin-top: 34px;
+      margin-bottom: 12px;
+    }
+    /* FAQ Accordion */
+    .faq-accordion .faq-question {
+      width: 100%;
+      text-align: left;
+      background: none;
+      border: none;
+      padding: 16px;
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    .faq-accordion .faq-question:hover {
+      background: #f7fafd;
+    }
+    .faq-accordion .faq-answer {
+      background: #e6f2ff;
+      padding: 16px 18px;
+      color: #2e3a48;
+      display: none;
+      animation: fadeIn .2s;
+    }
+    .faq-accordion .faq-item.open .faq-answer {
+      display: block;
+    }
+    .faq-accordion .faq-chevron {
+      margin-left: auto;
+      transition: transform 0.26s;
+      color: #a0aec0;
+    }
+    .faq-accordion .faq-item.open .faq-chevron {
+      transform: rotate(180deg);
+    }
+    .faq-section-title {
+      border-left: 4px solid #2563eb; padding-left: 12px; color: #2563eb; margin-bottom: 8px; font-size: 1.05rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+   
+   
+    <!-- Header -->
+    <header>
+      <h1>길 안내 로봇 서비스</h1>
+      <p>Smart Navigation Robot Guide</p>
+    </header>
+   
+   
+    <!-- Tabs -->
+    <nav class="menu">
+      <button class="active" onclick="setTab(0)">서비스 소개</button>
+      <button onclick="setTab(1)">사용설명서</button>
+      <button onclick="setTab(2)">자주 묻는 질문</button>
+    </nav>
+    <section id="content-wrap">
+
+      
+      <!-- Tab 0: 서비스 소개 -->
+      <div class="content" id="tab-0" style="display: block;">
+        <div class="space-y-6">
+          <div class="flex items-start gap-3">
+            <i class="fas fa-circle-info fa-lg text-blue-600" style="margin-top:3px"></i>
+            <div>
+              <h2 class="text-blue-600 mb-3">서비스 소개</h2>
+              <p class="text-gray-700 leading-relaxed mb-4">
+                <br>길 안내 로봇은 건물 내에서 원하시는 목적지까지</br>
+                안전하고 정확하게 안내해드리는 스마트 서비스입니다.<br>
+              </p>
+            </div>
+          </div>
+
+
+          <!-- Tab 0: 주요 기능 -->
+          <div class="border-t pt-6">
+            <h3 class="text-gray-800 mb-4">주요 기능</h3>
+            <div class="grid grid-cols-2 gap-3">
+              <div class="bg-blue-50 p-4 rounded-lg"><p class="text-blue-700">&nbsp;&nbsp;실시간 경로 안내</p></div>
+              <div class="bg-blue-50 p-4 rounded-lg"><p class="text-blue-700">&nbsp;&nbsp;손동작으로 도착지 설정</p></div>
+              <div class="bg-blue-50 p-4 rounded-lg"><p class="text-blue-700">&nbsp;&nbsp;장애물 자동 회피</p></div>
+              <div class="bg-blue-50 p-4 rounded-lg"><p class="text-blue-700">&nbsp;&nbsp;편의성 지원</p></div>
+            </div>
+          </div>
+
+
+          <!-- Tab 0: 문의처 -->
+          <div class="border-t pt-6 space-y-3">
+            <h3 class="text-gray-800 mb-4">문의처</h3>
+            <div class="flex items-center gap-3 text-gray-700">
+              <i class="fa-solid fa-phone text-blue-600"></i>
+              <span>02-1234-5678</span>
+            </div>
+            <div class="flex items-center gap-3 text-gray-700">
+              <i class="fa-solid fa-envelope text-blue-600"></i>
+              <span>캡스톤디자인@6team.com</span>
+            </div>
+            <div class="flex items-center gap-3 text-gray-700">
+              <i class="fa-solid fa-location-dot text-blue-600"></i>
+              <span>하워드관 - H107</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+      
+       <!-- 사용설명서 -->
+      <div class="content" id="tab-1" style="display: none;">
+        <div class="space-y-4">
+          <div class="flex items-start gap-3 mb-6">
+            <i class="fas fa-circle-info fa-lg text-blue-600" style="margin-top:3px"></i>
+            <div>
+              <h2 class="text-blue-600 mb-2">사용설명서</h2>
+              <p class="text-gray-700">안내 봇 사용 설명 정보를 확인하실 수 있습니다.</p>
+            </div>
+          </div>
+
+
+<!-- 사용설명서를 만들고 이 자리에 이미지 첨부 -->
+
+
+        </div>
+      </div>
+
+
+      <!-- Tab 2: FAQ -->
+      <div class="content" id="tab-2" style="display: none;">
+        <div class="space-y-6">
+          <div class="flex items-start gap-3 mb-6">
+            <i class="fas fa-question-circle fa-lg text-blue-600" style="margin-top:3px"></i>
+            <div>
+              <h2 class="text-blue-600 mb-2">자주 묻는 질문 (FAQ)</h2>
+              <p class="text-gray-700">로봇 이용 시 자주 묻는 질문과 답변입니다.</p>
+            </div>
+          </div>
+          <div class="faq-accordion">
+            <div class="faq-section-title">로봇 이용 방법 / 처음 이용시</div>
+            <div class="faq-item">
+              <button class="faq-question"><span class="text-blue-600">Q.</span> 길 안내 로봇을 처음 사용할 때 어떻게 시작하나요? <i class="fas fa-chevron-down faq-chevron"></i></button>
+              <div class="faq-answer">QR 코드를 스캔한 뒤, 화면에 보이는 "사용 설명서"에서 단계별 안내를 따라주세요.</div>
+            </div>
+            <div class="faq-section-title">경로 안내 관련</div>
+            <div class="faq-item">
+              <button class="faq-question"><span class="text-blue-600">Q.</span> 로봇이 안내해 줄 수 있는 목적지는 어디인가요? <i class="fas fa-chevron-down faq-chevron"></i></button>
+              <div class="faq-answer">"사용 설명서"에서 안내 가능한 목적지를 참고하시고, 기타 장소가 필요할 땐 안내센터에 문의해 주세요.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question"><span class="text-blue-600">Q.</span> 안내 경로 중에 장애물이나 통제가 있으면 어떻게 하나요? <i class="fas fa-chevron-down faq-chevron"></i></button>
+              <div class="faq-answer">로봇이 자동으로 우회하거나 안내 메시지를 제공합니다. 이동이 어려운 경우 현장 직원에게 문의하세요.</div>
+            </div>
+            <div class="faq-section-title">실수 / 문제 발생 시</div>
+            <div class="faq-item">
+              <button class="faq-question"><span class="text-blue-600">Q.</span> 로봇이 멈췄거나 길을 잃은 것 같아요. 어떻게 해야 하나요? <i class="fas fa-chevron-down faq-chevron"></i></button>
+              <div class="faq-answer">잠시 기다려도 이동하지 않으면, 길 안내 로봇 서비스 사이트에서 문의처를 통해 문의하세요.</div>
+            </div>
+            <div class="faq-item">
+              <button class="faq-question"><span class="text-blue-600">Q.</span> 로봇과 함께 엘리베이터/계단을 이용할 수 있나요? <i class="fas fa-chevron-down faq-chevron"></i></button>
+              <div class="faq-answer">현재 로봇은 엘리베이터 이용이 불가하며, 계단 대신 다른 경로로 안내합니다.</div>
+            </div>
+          </div>
+          <div class="mt-6 bg-yellow-50 border border-yellow-200 p-4 rounded-lg">
+            <p class="text-yellow-800 text-sm">
+              ※ 추가 문의사항은 문의처를 통해 연락주시기 바랍니다.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="footer">
+      <p>© 2025 길 안내 로봇 서비스. QR 코드 접속용 정보 사이트</p>
+    </div>
+  </div>
+ 
+ 
+  <!-- 상호작용 코드 -->
+ <script>
+    // 탭 기능
+    function setTab(n) {
+      const btns = document.querySelectorAll('.menu button');
+      btns.forEach((btn, idx) => {
+        btn.classList.toggle('active', idx === n);
+      });
+      for (let i = 0; i < 3; i++) {
+        document.getElementById('tab-' + i).style.display = (i === n) ? 'block' : 'none';
+      }
+    }
+    // FAQ Accordion 기능
+    document.addEventListener('DOMContentLoaded', function(){
+      let faqBtns = document.querySelectorAll(".faq-question");
+      faqBtns.forEach(function(btn){
+        btn.addEventListener("click", function(){
+          const faqItem = btn.closest('.faq-item');
+          const open = faqItem.classList.contains('open');
+          // 모든 FAQ 닫기
+          document.querySelectorAll('.faq-item.open').forEach(el=>el.classList.remove('open'));
+          // 자신만 펼치기/접기
+          if (!open) faqItem.classList.add('open');
+        });
+      });
+    });
+  </script>
+</body>
+</html>
